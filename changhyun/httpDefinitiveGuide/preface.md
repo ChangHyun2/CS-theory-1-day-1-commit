@@ -2,8 +2,8 @@
 
 1. HTTP : Web's foundation
     - HTTP 핵심 기술 요약
-    - ch1 : [overview of HTTP](./ch1-overview-of-http.md)
-    - ch2 : [URLs and Resources](./ch2-url-and-resources.md)
+    - ch1 : overview of HTTP
+    - ch2 : URLs and Resources
     - ch3 : how HTTP messages transport web content
     - ch4 : managing HTTP connections
 
