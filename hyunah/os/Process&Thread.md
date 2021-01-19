@@ -21,14 +21,14 @@
 -   운영체제는 프로세스를 관리하기 위해 프로세스의 생성과 동시에 고유한 PCB를 생성
 -   프로세스가 전환될 때, 이전 프로세스 작업의 진행상황을 PCB에 저장(Context Switching)
 -   저장되는 정보 (자세한 정보는 이후 chapter에서 정리 예정)
-    _ PID(Process ID): 프로세스 식별번호
-    _ 프로그램 Counter: 프로세스가 다음에 실행할 명령어의 주소
-    _ CPU 레지스터
-    _ CPU 스케쥴링 정보: 프로세스의 우선순위, 스케줄 큐에 대한 pointer 등
-    _ 메모리 관리 정보: 페이지 테이블 또는 세그먼트 테이블 등과 같은 정보 포함
-    _ 입출력 상태 정보: 프로세스에 할당된 입출력 장치들과 열린 파일 목록
-    _ accounting 정보: 사용된 CPU 시간, 시간제한, 계정번호 등
-    _ 프로세스 상태: new, ready, running, waiting, terminated 등의 상태를 저장
+    -   PID(Process ID): 프로세스 식별번호
+    -   프로그램 Counter: 프로세스가 다음에 실행할 명령어의 주소
+    -   CPU 레지스터
+    -   CPU 스케쥴링 정보: 프로세스의 우선순위, 스케줄 큐에 대한 pointer 등
+    -   메모리 관리 정보: 페이지 테이블 또는 세그먼트 테이블 등과 같은 정보 포함
+    -   입출력 상태 정보: 프로세스에 할당된 입출력 장치들과 열린 파일 목록
+    -   accounting 정보: 사용된 CPU 시간, 시간제한, 계정번호 등
+    -   프로세스 상태: new, ready, running, waiting, terminated 등의 상태를 저장
 ![image](https://user-images.githubusercontent.com/42240771/105043674-27e19480-5aa9-11eb-9e31-6c1f0a3fd597.png)
 
 > 프로세스에서 스레드로?  
