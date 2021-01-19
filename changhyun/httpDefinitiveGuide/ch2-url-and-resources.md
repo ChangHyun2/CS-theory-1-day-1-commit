@@ -232,4 +232,11 @@ scheme마다 unsafe한 문자가 다르기 때문에, unsafe한 문자일지라�
 
 URL의 단점
 
--
+- resource가 이동할 경우, 유효하지 URL이 된다.
+
+URN
+
+- resource의 위취가 아닌, resource에 고유한 이름을 부여한다.
+
+PRUL : url의 한 종류로 현재 resource의 위치를 네이밍하는 resource locator server를 이용한다.
+![](ch2-url-and-resources/2021-01-19-22-43-02.png)
