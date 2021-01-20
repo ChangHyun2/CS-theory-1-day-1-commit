@@ -11,3 +11,7 @@
 ### 동민
 
 ### 재은
+
+### [broccolism](https://github.com/broccolism)
+- 🗼 자료구조
+  - [21.01.19 AVL tree 이론](./broccolism/DataStructure/AVL%20Tree.md)
