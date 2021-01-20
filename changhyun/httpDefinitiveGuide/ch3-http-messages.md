@@ -12,7 +12,7 @@
 ## The Flow of Messages
 
 HTTP 메세지는 HTTP application에 의해 보내지는 블락으로, 메세지의 내용과 의미를 설명하는 meta-information을 담는 text로 시작한다. 
-
+****
 HTTP messages는 clients, proxies, servers 사이에서 오고 가며, 메세지가 이동하는 방향은 inbound, outbound, upstream, down-stream로 구분한다.
 
 ### Messages Commute Inbound to the Origin Server
@@ -336,4 +336,31 @@ client에서 server에서 처리할 수 없는 요청을 전달할 경우 발생
 
 403 [ forbidden ] : 리소스에 대한 authorization이 없을 경우. 즉, auth에는 성공하였으나 리소스에 대한 접근 권한 자체가 없을 경우 403 에러가 발생한다.
 
-404 [ not found ] :
+404 [ not found ] :  요청된 URL을 서버에서 찾을 수 없을 경우
+
+405 [ method not allowed ] : server에서 해당 method를 알고 있지만, target resource에 대해 method 지원이 되지 않는 경우. 서버는 Allow 헤더 필드를 통해 target resource가 현재 지원하는 메소드를 알려야한다.
+
+407 [ proxy authentication required ] : 어떻게 auth하는지에 대한 proxy-authenticatie 헤더와 함께 보내진다.
+
+408 [ request timeout ] : 서버가 사용되지 않는 연결로 판단해 종료했을 경우
+
+409 [ conflict ] : conflict는 일반적으로 PUT 요청에서 발생한다. ex) 동일한 이전 버전의 파일 업로드
+
+410 [ gone ] : 서버에서 target resource에 대한 접근을 더 이상 지원하지 않을 경우 ( 불확실한 경우라면 404)
+
+411 [ length required ] : Content-Length 헤더가 없는 요청에 대해 서버가 거절할 경우
+
+413 [ request payload too large ] : 서버에서 정해둔 entity 크기보다 클 경우, 연결 종료 또는 Retry-After 헤더 필드를 전달 받는다.
+
+414 [ request URI too long ]
+
+- POST해야할 다량의 query 정보를 GET으로 사용할 경우
+- redirection loop에 빠져 url이 길어질 경우
+- server가 보안에 취약해 공격당할 경우
+
+415 [ unsupported media type ] : Content-Type , Content-Encoding이 서버에서 지원하지 않을 경우
+
+416 [ requested range not satisfiable ] : document의 range가 없거나, Range 헤더 값이 없을 경우 . Conent-Range: bytes */12777의 형태로 unsatisfied한 range를 알려준다.
+
+417 [ expectation failed] : Expect 헤더가 조건을 만족하지 못할 경우
+
