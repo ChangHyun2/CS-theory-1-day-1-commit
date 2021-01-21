@@ -21,3 +21,10 @@
 -   [ ] 메모리 관리 전략
 -   [ ] 가상 메모리
 -   [ ] 캐시의 지역성
+
+### 재은
+
+### [broccolism](https://github.com/broccolism)
+
+-   🗼 자료구조
+    -   [21.01.19 AVL tree 이론](./broccolism/DataStructure/AVL%20Tree.md)
