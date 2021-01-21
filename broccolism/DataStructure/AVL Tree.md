@@ -2,13 +2,13 @@
 
 - To be BALANCED!
 - '탐색'을 잘 하려면 잘 찾기만 해서는 안된다. 잘 찾을 수 있도록 저장해야한다.
-  - array보다는 binary tree가, binary tree 보다는 AVL tree가 탐색 시간을 더 줄여준다.
-- 기존 binary tree가 갖고 있던 문제점
+  - array보다는 binary search tree가, binary search tree 보다는 AVL tree가 탐색 시간을 더 줄여준다.
+- 기존 binary search tree가 갖고 있던 문제점
   - 저장 순서에 따라 search 알고리즘의 성능 차이가 크게 난다.
     - 왜냐하면 저장 순서에 따라 전체 트리의 height가 달라지기 때문이다.
     - 최악일때는 O(N)이라는 끔찍한 결과를 낳는다.
       - 키 값이 1, 2, 3, ... 혹은 10, 9, 8, ... 처럼 늘어나거나 줄어들 때의 결과다.
-- 일반 binary tree에 비해 AVL tree가 갖는 장점
+- 일반 binary search tree에 비해 AVL tree가 갖는 장점
   - 저장 순서에 관계없이 탐색의 성능을 일정하게 유지할 수 있다.
   - how?
     - 균형을 잡아서.
@@ -51,7 +51,7 @@
 - 4가지 상황으로 일반화할 수 있다.
 
   - 순서대로 LL, RL, LR, RR 상태
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/20518b90-0e69-4dc3-856a-6ebea77b3697/Picture1.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/20518b90-0e69-4dc3-856a-6ebea77b3697/Picture1.png)
+    ![unbalanced-avl-trees](https://user-images.githubusercontent.com/45515332/105164579-a1848b80-5b58-11eb-8793-ba4e6b643020.png)
 
 - LL, RR 상황에서 균형을 잡기 위해 하는 rotation을 각각 LL rotation, RR rotation이라고 부른다.
   - LL rotation이라고 왼쪽으로 2번, RR rotation이라고 오른쪽으로 2번 회전하는게 아니다.
