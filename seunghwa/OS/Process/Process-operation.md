@@ -32,7 +32,55 @@ OS는 프로세스의 시작과 마침 기능을 제공해야 한다
 - `orphan` : 부모 프로세스가 자식 프로세스보다 `먼저 종료`된 경우</br>
 -> ex) daemon process
 
+## `fork()`를 통한 멀티프로세싱 이해
+```c
+int main(void) {
+  pid_t pid;
+  pid = fork();
+  printf("Hello Process!");
+}
+```
+위와 같은 코드가 있다고 하면은</br>
+![fork](./img/Process-code.png)
+`fork()` 명령어가 실행되면 부모 프로세스의 주소값이 복사되서 자식프로세스를 만들기 때문에</br>
+부모 프로세스와 자식 프로세스는 별개의 메모리 공간을 할당 받는다 </br></br>
+보통은 부모 프로세스가 먼저 `Hello Process`가 출력되고</br>
+자식 프로세스의 `Hello Process`가 출력되는데</br>
+**스케줄러에 따라서 변경 될수도 있다**
 
+>`fork()`를 실행할 경우 fork의 횟수를 n이라고 한다면</br>
+> 생성되는 프로세스의 개수는 2^n 만큼 생성된다
 
+## `wait()`의 사용
+```c
+int main(void) {
+  pid_t pid;
+  pid = fork();
+  if(pid == 0){
+    //child process
+    printf("child process end!!\n");
+  }
+  else if(pid > 0){
+    //parent process
+    wait(NULL);
+    printf("parent process end!!\n");
+  }
+}
+```
+`wait()` 시스템 콜을 사용하게 된다면
+![wait](./img/Process-wait.png)</br>
+위의 그림과 같이</br>
+1. p1 프로세스가 `wait()`을 부른다
+2. p1 프로세스가 `wait queue`로 들어간다
+3. p2 프로세스가 `fork()` 다음 명령을 실행한다
+4. p2 프로세스가 종료된다
+5. p2가 끝났다는 interrupt를 받고난 뒤 실행된다
 
+순서대로 진행된다
+
+## 최근 멀티프로세싱
+멀티프로세싱에 관련해서 공부를 하였지만</br>
+현재 동시성 프로그래밍에서는 뒤에서 배울 멀티쓰레딩으로 대부분 처리를 한다고 한다</br>
+현재에 멀티프로세싱은 `execlp()` 시스템 콜을 이용해서</br>
+현재 프로세스에서 **다른 프로세스를 생성할 때** 사용한다고 한다
 
