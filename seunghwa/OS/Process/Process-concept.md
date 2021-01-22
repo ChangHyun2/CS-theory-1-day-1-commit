@@ -6,7 +6,7 @@
 
 **프로세스**
 
-![OS-Process](../img/OS-Process.png)
+![OS-Process](./img/OS-Process.png)
 
 위에 흐름도에서도 볼 수 있듯이 프로세스가 작업을 마치기 위해서는
 - `CPU`
@@ -17,7 +17,7 @@
 것들이 필요하다
 
 ## :classical_building: Process의 메모리 구조
-![OS-Process-memeory](../img/OS-Process-memory.png)
+![OS-Process-memeory](./img/OS-Process-memory.png)
 
 ## :stopwatch: Process의 5단계 생명주기
 1. `New` : 새로운 프로세스가 만들어지는 시점
@@ -26,7 +26,7 @@
 4. `Ready` : 프로세서를 할당받기 전까지 기다리는 공간
 5. `Terminated` : 프로세스가 완전히 끝났을 시점
 
-![lifeCycle](../img/OS-Process-lifeCycle.png)
+![lifeCycle](./img/OS-Process-lifeCycle.png)
 
 ## :thinking: PCB(Process Control Block)란...
 `PCB`라는 것은 Prcess가 가져야하는 정보를 저장하는 공간이다</br>
