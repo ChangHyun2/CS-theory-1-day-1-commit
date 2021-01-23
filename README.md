@@ -5,6 +5,11 @@
 -   [x] ch1 : [overview of HTTP](./changhyun/httpDefinitiveGuide/ch1-overview-of-http.md)
 -   [ ] ch2 : [URLs and Resources](./changhyun/httpDefinitiveGuide/ch2-url-and-resources.md)
 
+#### 네트워크
+
+-   [x] 공인/사설/공인/유동 IP
+-   [x] OSI 7 계층
+
 ### 승화
 
 ### 혜진
