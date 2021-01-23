@@ -67,8 +67,8 @@ one-of type을 만드는 특이한 방법이 있다.
 
 ```erlang
 datatype mytype = TwoInts of int * int
-							  | Str of string
-								| Pizza
+				| Str of string
+				| Pizza
 ```
 
 datatype은 말그대로 새로운 자료형을 정의할 수 있게 해준다. 위의 코드를 실행시키면 현재 환경에 `mytype`이라는 새로운 type이 생긴다. 여기서 datatype은 one-of type이기 때문에
@@ -101,7 +101,7 @@ datatyp뿐만 아니라 `one-of type` value 모두에 해당되는 이야기이�
 (* f has type (mytype -> int) *)
 fun f x =
 	case x of
-			Pizza => 3
+		  Pizza => 3
 		| TwoInts(i1, i2) => i1 + i2
 		| Str s => String.size s
 ```
