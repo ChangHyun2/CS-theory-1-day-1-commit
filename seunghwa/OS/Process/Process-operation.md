@@ -42,6 +42,7 @@ int main(void) {
 ```
 위와 같은 코드가 있다고 하면은</br>
 ![fork](./img/Process-code.png)
+
 `fork()` 명령어가 실행되면 부모 프로세스의 주소값이 복사되서 자식프로세스를 만들기 때문에</br>
 부모 프로세스와 자식 프로세스는 별개의 메모리 공간을 할당 받는다 </br></br>
 보통은 부모 프로세스가 먼저 `Hello Process`가 출력되고</br>
@@ -69,6 +70,7 @@ int main(void) {
 ```
 `wait()` 시스템 콜을 사용하게 된다면
 ![wait](./img/Process-wait.png)</br>
+
 위의 그림과 같이</br>
 1. p1 프로세스가 `wait()`을 부른다
 2. p1 프로세스가 `wait queue`로 들어간다
