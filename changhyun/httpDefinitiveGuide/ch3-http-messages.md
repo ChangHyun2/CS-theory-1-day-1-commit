@@ -364,3 +364,88 @@ client에서 server에서 처리할 수 없는 요청을 전달할 경우 발생
 
 417 [ expectation failed] : Expect 헤더가 조건을 만족하지 못할 경우
 
+## 500 ~ 599 : Server Error Status Codes
+
+client가 valid한 요청을 송신했으나 서버 자체적인 문제로 error가 발생할 경우
+
+proxy가 발생한 error 또한 500번대에 해당될 수 있다.
+
+500 [ internal server error ] : 어떤 5xx를 응답할 지 불분명할 경우
+
+501 [ not implemented ] : server가 처리할 수 없는 요청을 날린 경우 ( server에서 지원하지 않는 method를 요청할 경우 )
+
+502 [ bad gateway ] :  서버가 proxy 또는 gate way로 동작하는 동안 upstream으로부터 invalid한 응답을 받을 경우
+
+503 [ service unavailable  ] : 일시적으로 서비스 사용이 불가능할 경우
+
+504 [ gateway timeout ] : gateway 또는 proxy로 동작하는 동안 request에 필요한 upstream으로부터의 response를 시간 내에 받지 못할 경우
+
+505 [ HTTP version not supported ] : 서버가 구 버전의 프로토콜을 지원하지 않을 경우
+
+# Headers
+
+헤더는 5개의 main class로 분류된다.
+
+1. General Headers 
+2. Request headers
+3. Response headers
+4. Entity header
+5. extension headers
+
+## General headers
+
+connectoin : req/res 연결 설정
+
+date : 메세지 생성 날짜
+
+mime version : sender가 보내는 mime 버전
+
+trailer : 무결성 check, 디지털 서명, post-processing 상태와 같은 metadata를 chunked message에 추가해준다.
+
+transfer-encoding : 인코딩 정보
+
+upgrade : sender가  프로토콜 버전을 업그레이드할 경우 사용
+
+via : 메세지가 거쳐온 intermediaries( 게이트웨이, 프록시) 정보
+
+**General caching headers ( Ch7 )**
+
+Cache control
+
+Pragma
+
+## Request headers
+
+request 메세지에서만 사용되는 header
+
+Client-IP : client의 IP 주소
+
+From : client user의 이메일
+
+Host : 요청을 보낸 서버의 hostname과 port
+
+Referer : 현재 요청된 URI를 포함하는 document의 URL
+
+UA-Color 
+
+UA-Disp 
+
+UA-OS
+
+UA-Pixels
+
+User-Agent
+
+**Accept headers**
+
+Accept : client에서 받아들일 수 있는 미디어 타입
+
+Accept-Charset : client에서 받아들일 수 있는 Charset
+
+Accept-Encoding 
+
+Accept-Language
+
+TE : Ch15
+
+**Conditional request headers**
