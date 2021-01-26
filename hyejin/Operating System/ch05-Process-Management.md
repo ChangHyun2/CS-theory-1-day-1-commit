@@ -52,6 +52,21 @@ Process의 상태는 Kernel의 주소영역 중 data에서 Queue라는 자료구
 
 ### Scheduler
 ---
-- Long term scheduler
-- Short term scheduler
-- Medium term scheduler
+- Long term scheduler  
+: 하드 디스크에서 메모리로 프로세스를 load하는 역할을 한다. 즉, 다음의 과정에서 long-term 스케줄러가 동작한다.
+![](https://t1.daumcdn.net/cfile/tistory/123A763350E18EBC2F)
+- Short term scheduler  
+  : 메모리에 있는 프로세스 중에서 프로세스가 CPU 점유권을 가질 때 어떤 프로세스가 선택되는지를 결정하는 스케줄러이다.
+![](https://t1.daumcdn.net/cfile/tistory/2552DD3650E18ECE0A)
+- Medium term scheduler  
+  : asleep 상태에서 ready 상태로 넘어가지 못 하거나 ready 상태에서 running 상태로 넘어가지 못 하는 상황이 발생하면 어떤 일이 벌어질까? 결과적으로 실행되지도 않으면서 메모리만 차지하고 있는 비효율적인 상황이 발생한다. 이럴 경우 메모리에 load되어있는 running 상태로 넘어가지 않는 프로세스를 하드디스크로 쫓아낸다.(swap-out) 그리고 나중에 필요에 의해 다시 메모리로 들어올 수도 있다.(swap-in) 즉, 아래와 같은 과정이다. 이 과정을 midium-term 스케줄러가 한다.
+![](https://t1.daumcdn.net/cfile/tistory/0136394E50E1917011)
+
+
+
+### Process 생성
+---
+
+
+### Process간 협력
+---
