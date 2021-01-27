@@ -4,6 +4,6 @@
 ## OS
 - [Process](./OS/Process/Readme.md) 
 - [Thread](./OS/Thread/Readme.md)
-- 
+- [CPU-Scheduling](./OS/CPU-Scheduling/Readme.md)
 ## Database
 
