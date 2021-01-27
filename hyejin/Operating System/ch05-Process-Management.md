@@ -36,7 +36,7 @@ Process의 상태는 Kernel의 주소영역 중 data에서 Queue라는 자료구
 ![3-1. Process](https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F99D2B3435A42EF4C208C3E)
 - process가 CPU를 기다리는지(Ready Queue, 이때의 Process는 Ready state), 입출력을 기다리는지(Device Queue, Blocked state) 등등 각 상태를 관리해준다.
 - 하드웨어 자원을 기다리는 것 뿐만 아니라 공유 데이터인 소프트웨어 자원을 기다리는 경우도 있다.  (Resource queue)
->공유 자원에 접근한다는 의미는 CPU를 점유중인 process 기준이 아니라 데이터를 기다리는 queue 순서대로 접근 권한을 부여한다. CPU를 할당하여 running중인 Process A가 공유 data에 접근하려면, 봉쇄 상태로 전환하여 Resource Queue에 들어가 줄을 서야한다.
+  >공유 자원에 접근한다는 의미는 CPU를 점유중인 process 기준이 아니라 데이터를 기다리는 queue 순서대로 접근 권한을 부여한다. CPU를 할당하여 running중인 Process A가 공유 data에 접근하려면, 봉쇄 상태로 전환하여 Resource Queue에 들어가 줄을 서야한다.
 
 - Job Queue: system 내 모든 process를 관리한다. process의 상태와는 관계없이 모든 process가 Job queue에 속하며, 즉 Ready queue와 Device queue에 존재하면 여기에도 반드시 존재해야한다.
 
@@ -52,21 +52,42 @@ Process의 상태는 Kernel의 주소영역 중 data에서 Queue라는 자료구
 
 ### Scheduler
 ---
-- Long term scheduler  
-: 하드 디스크에서 메모리로 프로세스를 load하는 역할을 한다. 즉, 다음의 과정에서 long-term 스케줄러가 동작한다.
-![](https://t1.daumcdn.net/cfile/tistory/123A763350E18EBC2F)
-- Short term scheduler  
-  : 메모리에 있는 프로세스 중에서 프로세스가 CPU 점유권을 가질 때 어떤 프로세스가 선택되는지를 결정하는 스케줄러이다.
-![](https://t1.daumcdn.net/cfile/tistory/2552DD3650E18ECE0A)
-- Medium term scheduler  
-  : asleep 상태에서 ready 상태로 넘어가지 못 하거나 ready 상태에서 running 상태로 넘어가지 못 하는 상황이 발생하면 어떤 일이 벌어질까? 결과적으로 실행되지도 않으면서 메모리만 차지하고 있는 비효율적인 상황이 발생한다. 이럴 경우 메모리에 load되어있는 running 상태로 넘어가지 않는 프로세스를 하드디스크로 쫓아낸다.(swap-out) 그리고 나중에 필요에 의해 다시 메모리로 들어올 수도 있다.(swap-in) 즉, 아래와 같은 과정이다. 이 과정을 midium-term 스케줄러가 한다.
-![](https://t1.daumcdn.net/cfile/tistory/0136394E50E1917011)
+- **Long term scheduler**  
+: 장기 스케줄러는 작업스케줄러(job scheduler)라고도 부른다. **시작 상태의 process를 ready 큐에 진입시킬지 결정**하는 역할을 하며, process에게 메모리를 할당하는 문제에 관여한다.*메모리에 동시에 올라가있는 프로세스의 수(degree of multiprogramming)를 조절*
+  - 현대의 시분할 시스템에서는 장기 스케줄러는 대부분 두지 않는다. 이전에는 적은 양의 메모리를 많은 process에게 할당하면 프로세스당 메모리 보유량이 지나치게 적어져 시스템 효율이 떨어졌으나, 이제는 시분할 시스템용으로 중기 스케줄러를 두는 경우가 많다. 
+- **Short term scheduler**  
+  : CPU 스케줄러라고도 하며, ready 큐에 있는 여러 process 중에서 어떤 것을 running 상태로, CPU를 할당할 것인지 결정한다. 시분할 시스템에서 timer interrupt가 발생하면 호출된다.
+- **Medium term scheduler**  
+  : 메모리에 적재된 프로세스 수를 동적으로 조절한다. 메모리에 너무 많은 프로세스가 적재되어 프로세스당 보유 메모리양이 극도로 적어지면 CPU 수행에 당장 필요한 주소공간도 메모리에 올려놓기 어려워진다. (디스크 입출력 多) -> 이를 막기위해 blocked 상태, ready queue로 이동하는 process 순으로 메모리를 빼앗아 디스크의 스왑 영역에 저장한다. *(Swap out)* 이렇게 swap out된 상태를 중지(suspended, stopped) 상태라 부른다.  
 
+  ![What is a suspended process in an OS? - Quora](https://qph.fs.quoracdn.net/main-qimg-8da20a8502dc9d7ed01c08b8bafc8599)
 
 
 ### Process 생성
 ---
+- system 부팅 후 최초의 process는 OS가 생성, 그 이후에는 이미 존재하는 process(부모 프로세스)가 다른 process(자식 프로세스)를 복제 생성한다.
+- 생성된 process가 작업을 수행하기 위해선 자원 필요하다. 부모와 자식이 CPU를 획득하기 위해 경쟁하는 관계로 공존하며 수행되는 모델과, 자식이 terminated 될때까지 부모가 wait하는(동기화) 모델 존재한다. 
 
+   > wait 모델의 예시  
+UNIX 명령어 command 입력시 command 수행 종료될때까지 프롬프트를 다시 띄우지 않음   
+부모: 명령어 입력창, 자식: command를 수행중
+- 생성된 자식 프로세스도 별도의 주소공간을 보유한다. **fork()** 시스템 콜을 하면 부모의 프로세스에서 **프로세스 ID를 제외한 모든 문맥(context)를 복사**하여 자식 프로세스를 만든다. 자식은 프로그램을 수행하는 지점도 부모와 동일하다. 
+
+  > *그렇다면 부모와 자식을 어떻게 구분하는가?  
+바로 fork()의 반환값이 자식은 0, 부모는 양수이다.(분기지점) 다른 독자적인 수행을 원한다면 자식에게 **exec() 시스템 콜을 통해 주소 공간을 새롭게** 덮어씌워준다.  
+![Image for post](https://miro.medium.com/max/1374/1*uWytsHCicvTwVHB7hoSuWg.png)
+
+- 부모 프로세스는 해당 자식 프로세스들이 모두 종료된 후에 종료될 수 있다. 이와 관련해 프로세스의 종료 두가지를 알아보자.
+  - 자발적 종료: process가 명령(instrcution)을 모두 수행한 후 exit() 시스템 콜을 통해 OS에게 자신이 종료됨을 알린다. -> OS는 자원을 회수하고 process를 정리한다.
+  - 비자발적 종료: 부모 프로세스가 abot()라는 함수를 통해 자식 프로세스의 수행을 강제로 종료시킨다.
+> 부모 프로세스가 종료되어도 자식을 유지시키고 싶으면?  
+  ->종료되지 않을 다른 프로세스의 양자로 자식 프로세스를 보내는 방식을 이용한다.
 
 ### Process간 협력
 ---
+- process는 각자 자신만의 주소공간을 가지고 수행되며, 다른 프로세스의 주소 공간을 참조하는 것은 허용되지 않는다. (다른 프로세스의 수행에 영향을 미칠 수 없다)
+- 독립적인 프로세스들이 경우에 따라 협력할 떄 효율성이 좋아질 수 있다.
+- 대표적인 협력 메커니즘은 OS가 제공하는 IPC(Inter-Process Communication), 하나의 컴퓨터 안에서 실행 중인 서로 다른 프로세스 간 발생하는 통신이다. *의사소통(통신)+동기화 보장*
+  - 메세지 전달 (message passing) 방식
+  - 공유 메모리(shared memory) 방식
+ 
