@@ -98,3 +98,48 @@ if self.current_node.left == Node and self.current_node.right != None // 오른�
        slef.parent.right = self.current_node.right
 ```
 
+#### 3-3 삭제할 Node의 Chiled Node 2개 삭제
+
+```
+//왼쪽에서 삭제한다.
+
+if self.current_node.left != None and self.current_node.right != None
+	if value < self.parent.value
+		self.change_node = self.current_node.right
+		self.change_node_parent = self.current_node.right
+		while self.change_node.left != None:
+			self.change_node_parent = self.change_node
+			self.change_node = self.change_node.left
+			self.change_node_parent.left = None
+			if self.change_node.right != None:
+				self.change_node_parent.left = self.change_node.right
+			else:
+				self.change_node_parent.left = None
+			self.parent.left = self.change_node
+			self.change_node.right = sefl.current_node.right
+			self.change_node.left = self.chage_node
+		
+```
+
+```
+//오른쪽에서 삭제한다
+	else:
+		self.chage_node = self.current_node.right
+		self.change_node_parent = self.current_node.right
+		while self.chage_node.left != None:
+			self.change_node_parent = self.change_node
+			self.chage_node.= = self.chage_node.left
+		if self.change_node.right != None:
+    	self.change_node_parent.left = self.chagne_node.right
+    else:
+    	self.change_node_parent.left = None
+    self.parent.right = self.change_node.left
+    self.change_node.left = self.current_node.left
+    self.change_node.right = sefl.current_node.right
+```
+
+#### 2-4 이진 탐색 트리의 시간 복잡도
+
+depth 를 h라고 표현한다면 O(h) 이다.
+n개의 노드를 가진다면 h=log2n에 가까우므로, 시간 복잡도는 O(logn) 이라고 할 수 있다. 한번 실행시마다, 50%의 실행할 수도 있는 명령을 제거한다는 의미, 즉 50%의 실행시간을 단축시킬 수 있다는 것을 의미한다.
+
