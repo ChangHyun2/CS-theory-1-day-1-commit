@@ -35,11 +35,47 @@
 - 새로운 process의 문맥을 PCB로부터 복원 후 user mode로 전환해 CPU의 제어권을 넘김
 - 하나의 process 정지 ~ 다른 process에게 CPU 전달까지 소요되는 시간을 **dispatch latency** (디스패치 지연시간)이라 부르며, 대부분 context switch의 overhead에 해당
 ### Scheduling 성능평가
+---
 : scheduling 기법의 성능을 평가하기 위한 지표 <System 관점 지표/User 관점 지표>
 - System 관점 지표
-   -  CPU 이용률(CPU utilization)
-   - 처리량(throughput)
+   - **CPU 이용률**(CPU utilization)
+    : CPU가 일을 한 시간의 비율
+   - **처리량**(throughput)
+   : 주어진 시간동안 ready 큐에서 기다리고 있던 프로세스 중 몇 개를 끝마쳤는지 (CPU 버스트를 완료한 프로세스 수)
 - User 관점 지표
-   - 소요시간(turnaround time)
-   - 대기시간(waiting time)
-   - 응답시간(response time)
+   - **소요시간**(turnaround time)
+    : CPU 요청 시점(Ready큐에서 대기) ~ CPU 버스트가 끝날때까지 (프로세스 종료가 아님!!!) 
+   - **대기시간**(waiting time)
+   : CPU 버스트 기간 중 프로세스가 ready 큐에서 CPU를 얻기 위해 기다린 시간의 합
+   - **응답시간**(response time)
+  : ready 큐에 들어온 후 처음으로 CPU를 획득하기까지 기다린 시간
+
+
+### Scheduling Algorithm
+---
+- **선입선출 (Frist-Come First-Served: FCFS)**
+ : 프로세스가 준비 큐에 도착한 시간 순서대로 CPU를 할당하는 방식, 비선점형
+   - 단점: CPU 버스트가 긴 프로세스가 먼저 올 경우 CPU 버스트가 짧은 프로세스가 오랜 시간을 기다려야하는 Convoy effect가 일어난다.
+  ![scheduling algorithm](https://i2.wp.com/sciencerack.com/wp-content/uploads/2018/12/fcfs-min.jpg?resize=352%2C297&ssl=1)
+	해당 그림에서의 Average waiting time = (0 + 4 + 6) / 3 = 3.3
+- **최단작업 우선 (Shortest-Job First: SJF)**
+ : CPU 버스트가 가장 짧은 프로세스에게 먼저 CPU를 할당하는 방식
+   - 프로세스가 ready 큐에서 기다리는 전체적인 시간이 줄어들어, 평균 대기시간을 가장 짧게 만드는 최적 알고리즘(optimal algorithm) 이다.
+   - 비선점형(nonpreemptive) 방식: CPU를 스스로 반납하기 전까지는 빼앗기지 않는 방식
+   ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/SJF-min.jpg?resize=372%2C309&ssl=1)
+  - 선점형(preemptive) 방식: 진행중인 프로세스의 남은 CPU 버스트 시간보다 더 짧은 CPU 버스트 시간을 가지는 프로세스가 도착할 경우, CPU를 빼앗고 해당 CPU에게 할당시켜주는 방식이다. SRTF(Shortest Remaining Time First)라고도 부른다.
+  
+      ![CPU Scheduling Basic Concepts Scheduling Criteria - ppt video online  download](https://slideplayer.com/slide/5264072/16/images/18/Example+for+Preemptive+SJF+%28SRTF%29.jpg)
+
+  - SJF에서의 문제점은 *CPU 버스트 시간을 미리 알 수 없다*는 것이다. 그래서 예측을 통해 CPU 버스트 시간을 구하고, 그 예측한 값중에서 가장 작은 값을 지니는 프로세스에게 할당한다.
+    > (n+1) 번째 CPU 버스터의 예측시간 $T_{n+1}$은 $$T_{n+1}  = at_n + (1 - a)T_n$$
+    $t_n$: n번째 **실제** CPU 버스트 시간 $T_n$: n번째 **예측** CPU 버스트 시간
+    $a$: 0~1 사이 상수, 두 요소를 조절하는 매개변수(parameter)
+    $T_n=at_{n-1} + (1 - a)T_{n-1}$이고, $T_n$의 자리에 넣는 방식으로 계산하다보면
+    $$T_{n+1}  = at_n + (1 - a)at_{n-1} +  ... + (1-a)^jat_{n-j} + ...$$
+    $a$와 $1-a$은  
+
+- 우선순위 (Priority)
+    ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/prrs-min.jpg?resize=300%2C252&ssl=1)
+- 라운드 로빈 (Round Robin)
+  ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/rr-min.jpg?resize=315%2C313&ssl=1)
