@@ -449,3 +449,51 @@ Accept-Language
 TE : Ch15
 
 **Conditional request headers**
+
+조건적으로 요청할 경우 사용한다
+
+ ex) 클라이언트가 가지고 있는 문서가 서버와 다를 경우에만 데이터를 요청하고자 할 때 
+
+Expect : 서버에서 요청을 처리할 수 있는지 확인할 떄 사용 (ex) 서버에서 Content-Length를 감당할 수 있어?)
+
+If-Match
+
+If-Modified-Since
+
+If-None-Match
+
+If-Range
+
+If-Unmodified-Since 
+
+Range : 서버에서 range request를 허용할 경우 리소스의 일정 범위만 요청
+
+**Request Security headers**
+
+Authorization : server에 인증하기 위한 credentials를 포함한다. `Authorization: <type> <credentials>`
+
+Cookie : 브라우저에서는 default로 서버가 클라이언트에 저장한 cookie를 server측으로 요청 시 함께 전달하며, privacy 모드를 설정할 경우 cookie가 전달되지 않는다.  `Cookie : <cookie-list>`
+
+Cookie2
+
+**Proxy request headers**
+
+ch6에서 자세히 다룬다.
+
+효율적으로 proxy를 사용하기 위해 사용된다.
+
+## Response Headers
+
+client가 응답을 더 잘 이해할 수 있도록 돕고, 다음 요청에 더 잘 대응하기 위한 정보를 client에 전달해둔다.
+
+Age : 
+
+Public : 
+
+Retry-After :
+
+Server :
+
+Title :
+
+Warning :
