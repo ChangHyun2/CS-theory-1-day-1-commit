@@ -23,5 +23,64 @@
 
 **이진 탐색 트리는 탐색을 위한 구조, 힙은 최대/최소값 검색을 위한 구조중 하나이다.**
 
+### 3. 힙(Heap) 동작
+
+#### 3-1 힙의 데이터 삽입하기
+
+힙은 완전 이진 트리이므로, 삽입할 노드는 기본적으로 왼쪽 최하단부 노드부터 채워지는 형태로 삽입한다. 
+채워진 후에는 부모노드와 비교해서 바꿔주는 작업을 반복한다. (Max Heap의 경우) 
+
+#### 3-2 힙의 데이터 삭제하기
+
+보통 삭제는 최상단 노드(root 노드)를 삭제하는 것이 일반적이다.
+가장 마지막에 들어갔던 노드를 최상단 노드로 변경한다. 
+채워진 후에는 자식노드와 부모노드를 비교해서 바꿔주는 작업을 반복한다.
+
+### 4. 힙(Heap) 구현
+
+> 일반적으로 힙 구현시 **배열 자료구조**를 활용한다. 
+> 배열은 인덱스가 0번부터 시작하지만, **힙 구현의 편의를 위해, root 노드 인덱스 번호를 1로 지정하면, 구현이 좀 더 수월**하다.
+
+`부모 노드 인덱스 번호  (parent node's index)` : 자식 노드 인덱스 번호 (child node's index) // 2
+
+`왼쪽 자식 노드 인덱스 번호 (left child node's index)` :부모 노드 인덱스 * 2
+
+`오른쪽 자식 노드 인덱스 번호 (right child node's index)` : (부모 노드 인덱스 * 2 )+1
+
+```
+# 데이터 추가
+class Heap:
+	def _init_(self, data):
+		self.heap_array = list()
+		self.heap_array.append(None) // 0 인덱스는 사용 안한다.
+		self.heap_array.append(data)
+		
+	def move_up(self., inserted_data):
+	if inserted_idx <= 1:
+		return False
+	
+	parent_idx = inseted_idx // 2
+	if self.heap_array[inserted_idx] > self.heap_array[parent_idx]
+		return True
+	else:
+		return False
+  
+	def insert(self, data):
+		if len(self.heap_array) == 0:
+			self.heap_array.append(None)
+			self.heap_array.append(data)
+			return True
+		self.heap_array.append(data)
+		
+		inserted_icdx = len(self.heap_array) -1 // 처음 인덱스는 없으니까
+		
+		while self.move_up(inserted_idx):
+			parent_idx = inserted_idx // 2
+			self.heap_array[inserted_idx] , self.heap_array[parent_idx] = self.heap_array[parent_idx], self.heap_array[inserted_idx]
+			inserted_idx = parent_idx	
+			return True
+					
+```
+
 #### 참고
 https://gmlwjd9405.github.io/2018/05/10/data-structure-heap.html
