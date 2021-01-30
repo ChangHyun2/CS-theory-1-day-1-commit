@@ -486,14 +486,56 @@ ch6에서 자세히 다룬다.
 
 client가 응답을 더 잘 이해할 수 있도록 돕고, 다음 요청에 더 잘 대응하기 위한 정보를 client에 전달해둔다.
 
-Age : 
+Age : response가 server에서 client로 도착하기까지 얼마나 오래 걸렸는지를 알려준다.
 
-Public : 
+Public : server가 resource에 대해지원하는 요청 메소드를 알려준다.
 
-Retry-After :
+Retry-After : server의 리소스가 이용될 수 없을 경우 재요청 타이밍을 알려준다.
 
-Server :
+Server : server application software의 버전 정보
 
-Title :
+Title : HTML document의 title
 
-Warning :
+Warning :  reason phrase보다 상세한 경고 메세지
+
+**Negotiation headers**
+
+ch17에서 자세히 다룬다.
+
+Accept-Ranges : resource로 몇 bytes를 accept할 수 있는지
+
+Vary : ex) Vary: User-Agent를 지정할 경우 여러 디바이스에 대응할 때(user agent가 서로 다르기 떄문에) 페이지 캐싱 여부를 결정할 수 있다.
+
+**Response security headers**
+
+ch14에서 자세히 다룬다.
+
+Proxy-Authenticate
+
+Set-Cookie/Cookie2 : token을 set할 때 사용한다.
+
+WWW-Authenticate : 
+
+## Entity Headers
+
+Allow : entity를 사용해 처리될 수 있는 메소드 lists를 보여준다.
+
+Location : resource가 있는 페이지 URL을 나타내며 `3xx` (redirection) 또는 201 `created` 과 함께 사용된다.
+
+**Content headers**
+
+Content-Base : body에 있는 relative URL을 resolve하기 위한, base URL을 알려준다.
+
+Content-Encoding :  body가 어떻게 인코딩 되었는지
+
+Content-Language/Length/Location/MD5/Range/Type
+
+**Entity caching headers**
+
+어떻게, 언제 캐싱할 지 알려준다.
+
+ETag : entity와 관련된 entity tag
+
+Expires 
+
+Last-Modifed : entity가 수정된 최근 날짜/시간
