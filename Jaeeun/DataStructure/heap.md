@@ -47,8 +47,9 @@
 
 `오른쪽 자식 노드 인덱스 번호 (right child node's index)` : (부모 노드 인덱스 * 2 )+1
 
+#### 4-1 힙(Heap) 데이터 추가
+
 ```
-# 데이터 추가
 class Heap:
 	def _init_(self, data):
 		self.heap_array = list()
@@ -72,7 +73,7 @@ class Heap:
 			return True
 		self.heap_array.append(data)
 		
-		inserted_icdx = len(self.heap_array) -1 // 처음 인덱스는 없으니까
+		inserted_idx = len(self.heap_array) -1 // 처음 인덱스는 없으니까
 		
 		while self.move_up(inserted_idx):
 			parent_idx = inserted_idx // 2
@@ -82,5 +83,57 @@ class Heap:
 					
 ```
 
+#### 4-2 힙(Heap) 데이터 삭제
+
+```
+class Heap:
+	def _init_(self, data):
+		self.heap_array = list()
+		self.heap_array.append(None) // 0 인덱스는 사용 안한다.
+		self.heap_array.append(data)
+	
+	def move_down(self, popped_idx):
+		left_child_popped_idx = popped_idx * 2 // 왼쪽의 자식 노드
+		right_child_popped_idx = popped_idx * 2 + 1 // 오른쪽 자식 노드
+		
+		# 왼쪽 자식 노드도 없을 때
+		if left_child_popped_idx >= len(self.heap_array):
+			return False
+		
+		#오른쪽 자식 노드 없을 때
+		elif right_child_popped_idx >= len(self.heap_array):
+    	if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]
+    		self.heap_array[popped_idx], self.heap_array[left_child_popped_idx] =
+    		self.heap_array[left_child_popped_idx] , self.heap_array[popped_idx]
+    	else
+    		return False
+    	
+     #오른쪽 왼쪽 자식 노드 모두 있을때
+    	else:
+    		if self.heap_array[popped_idx] < self.heap_array[left_child_popped_idx]
+    			self.heap_array[popped_idx], self.heap_array[left_child_popped_idx] =
+    			self.heap_array[left_child_popped_idx], self.heap_array[popped_idx]
+    			popped_idx = left_child_popped_idx
+    		else
+    			return False
+    		if self.heap_array[popped_idx] < self.heap_array[right_child_popped_idx]
+    			self.heap_array[popped_idx], self.heap_array[right_child_popped_idx]
+    			= self.heap_array[right_child_popped_idx], self.heap_array[popped_idx]
+    		else
+    			return False
+		
+	def pop(self):
+		if len(self.heap_array) <= 1:
+			return None
+		returned_data = self.heap_array[1]
+		self.heap_array[1] = self.heap_array[-1] // 맨 마지막으로 root로 바꿔준다.
+		del self.heap_array[-1] // 마지막 데이터를 지워준다.
+		return returned_data
+		poped_idx = 1
+		
+	
+```
+
 #### 참고
+
 https://gmlwjd9405.github.io/2018/05/10/data-structure-heap.html

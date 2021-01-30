@@ -34,7 +34,7 @@
 - 수행중이던 process의 context를 그 PCB에 저장
 - 새로운 process의 문맥을 PCB로부터 복원 후 user mode로 전환해 CPU의 제어권을 넘김
 - 하나의 process 정지 ~ 다른 process에게 CPU 전달까지 소요되는 시간을 **dispatch latency** (디스패치 지연시간)이라 부르며, 대부분 context switch의 overhead에 해당
-### Scheduling 성능평가
+### Scheduling 성능평가 지표
 ---
 : scheduling 기법의 성능을 평가하기 위한 지표 <System 관점 지표/User 관점 지표>
 - System 관점 지표
@@ -73,9 +73,71 @@
     $a$: 0~1 사이 상수, 두 요소를 조절하는 매개변수(parameter)
     $T_n=at_{n-1} + (1 - a)T_{n-1}$이고, $T_n$의 자리에 넣는 방식으로 계산하다보면
     $$T_{n+1}  = at_n + (1 - a)at_{n-1} +  ... + (1-a)^jat_{n-j} + ...$$
-    $a$와 $1-a$은  
+    $a$와 $1-a$은 곱해질수록 작아지므로, $t_{n-1}$의 계수는 $t_{n}$보다 작은 값이 되고, 점점 이전의 실제 CPU 버스트 시간이 기여하는 값이 작아진다.
 
-- 우선순위 (Priority)
-    ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/prrs-min.jpg?resize=300%2C252&ssl=1)
-- 라운드 로빈 (Round Robin)
-  ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/rr-min.jpg?resize=315%2C313&ssl=1)
+- **우선순위 (Priority)**
+ : 우선순위가 가장 높은 프로세스에게 먼저 CPU를 할당
+  - 우선순위를 CPU 버스트 시간으로 두면, SJF와 동일한 의미
+   - 선점형: CPU에서 수행 중인 프로세스보다 우선순위가 높은 프로세스가 도착하면 CPU를 빼앗고 할당시켜줌
+   - 비선점형: 우선순위가 높은 프로세스가 오더라도 CPU 자진반납 후 할당
+   ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/prrs-min.jpg?resize=300%2C252&ssl=1)
+
+    - starvation에 대비한 aging 기법 이용 (기다린 시간 ↑ -> 우선순위 ↑) 
+  
+  
+- **라운드 로빈 (Round Robin)**
+   - 시분할 성질을 가장 잘 이용 
+   - 각 프로세스가 CPU 최대 사용 시간(할당시간, time quantum) 제한
+   ![scheduling algorithm](https://i0.wp.com/sciencerack.com/wp-content/uploads/2018/12/rr-min.jpg?resize=315%2C313&ssl=1)
+     
+   - 이질적인 프로세스가 같이 실행될때 효과적이고, *CPU 버스트 시간*과 프로세스의 *대기시간*이 비례한다.
+     > $n$개의 프로세스가 ready queue에서, 할당시간이 $q$일때
+      모든 프로세스는 $(n-1)q$시간 이내에 적어도 한 번 CPU를 할당받을 수 있다.
+       -> 이런 방식은 대화형 프로세스에서 빠른 응답을, 긴 프로세스에서도 불이익 없이 할당이 가능하다. 
+   - 할당 시간 ↓ -> context switch (문맥교환) ↑
+   - 다른 알고리즘과의 비교
+     - SJF의 경우엔 평균 대기시간에선 우수하나 But CPU 버스트 시간이 짧은 프로세스에만 유리하고 긴 프로세스는 불리한 반면,
+     R.R은 CPU 버스트 시간에 대기시간 뿐만 아니라 소요시간도 비례하므로 매우 공정
+      > R.R : CPU 버스트 시간이 1초인 프로세스가 작업을 완료하기까지 10초가 걸렸으면, CPU 버스트가 10초인 프로세스는 10배인 100초가 걸릴 것이다. 
+        SJF: 버스트시간 1초는 10초에 끝나도, 10초인 프로세스는 앞에 더 짧은 CPU 버스트를 가진 프로세스가 계속 들어온다면 무한정 기다려야한다.
+      - FCFS와의 비교
+    : 버스트 시간이 거의 동일할때 R.R은 비효율적이나 대부분의 환경에선 제각각인 경우가 많으므로 합리적이다. 반면에 FCFS는 프로세스마다 편차가 매우 크다.
+    
+       > CPU 버스트 시간이 10인 프로세스 10개가 엇비슷하게 도착
+        FCFS: CPU를$P_1, P_2, ... P_10$이 순서대로 사용하는 식이며,
+          - 대기시간, 응답시간 : 0, 10, ... 90  평균: 45
+          - 소요시간: 10, 20, ... 10 평균: 55
+         R.R: (할당시간이 매우 짧다는 가정) 10개의 프로세스가 100이라는 시간에 거의 동시 종료
+         - 대기시간:  평균 90, 평균 응답시간은 매우 짧음
+         - 소요시간: 평균 100
+ - **멀티레벨 큐(Multi-level Queue)**
+  :Ready queue를 여러개로 분할하여 관리하며, process별 성격 맞춤 스케줄링이 가능하다.
+   - 일반적으로 전위큐/후위큐 분할운영을 한다.
+      - 전위큐(foreground queue): 응답시간을 짧게 하기 위해 Round robin 사용, 대화형 작업
+      - 후위큐(background queue): context switch를 줄이기 위해 FCFS 사용, 계산위주 작업
+   - 어떤 queue를 먼저 할당할지 *Queue scheduling 필요*
+       - fixed priority scheduling: 고정된 우선 순위를 부여
+       - time slice: 각 queue에서 CPU 시간을 적절한 비율로 할당 
+    
+           
+![MODULE 5 - VIDEO 2 - MLQ and MLFQ CPU scheduling - YouTube](https://i.ytimg.com/vi/NmFpCJdLd1g/maxresdefault.jpg)
+ 
+ 
+ - **멀티레벨 피드백 큐(Multilevel Feedback Queue)**
+ : 멀티레벨에서 process queue가 이동이 가능한 알고리즘이다.
+   - aging 기법을 이용할 수 있다.
+   - queue의 수, queue scheduling, process를 상위 큐로 승격 혹은 하위큐로 강등, process 도착시 들어갈 queue 결정 기준 등을 고려야해야한다.
+ ![Scheduling algorithms](https://image.slidesharecdn.com/csc4320chapter5-2-101203002830-phpapp01/95/scheduling-algorithms-29-728.jpg?cb=1291336136)
+   - 상위의 큐일수록 높은 우선순위를 지니며, 작업시간이 빠른 큐는 높은 우선순위에서 작업을 완료할 수 있으며, 이후 할당시간으로도 작업이 완료되지 않는 CPU 처리가 긴 프로세스의 경우 FCFS 처리를 이용한다.
+  (예제찾기)
+
+- **다중처리기(Multi-processor)**
+ : CPU가 여러개인 multi-processor system에서 처리하는 스케줄링
+  - 처리할 수 있는 CPU가 여러개이므로 ready queue에서 알아서 꺼내어가도록 작업할 순 있겠지만, 특정 CPU에서 수행되어야하는 프로세스가 있는 경우엔 문제가 생긴다.
+  - 이런 문제는 CPU별로 다른 준비줄을 세우는 방법을 생각해볼 수 있겠지만, 이번에는 일부 CPU에 작업이 편중될 수 있는 우려가 생긴다
+  - 고로 이걸 방지하기 위해 CPU별 부하를 적절히 분산시키는 **부하균형(load balancing)**이 필요하다.
+  - 
+- **실시간 (real-time)**
+- 
+### Scheduling 알고리즘 평가
+---
