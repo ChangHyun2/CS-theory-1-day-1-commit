@@ -52,14 +52,18 @@ consumer는 +1이 되지않은 count에 count--를 진행함으로써 전혀 다
 ## Critical Section 문제
 이 문제를 해결하기 위해서 특정활동에서는 `동기화적`으로 처리한다
 
-### Mutual Exclusion
+### Mutual Exclusion 상호배제
+`상호배제` : 어떤 프로세스 p가 critical section부분을 수행하고 있다면  
+다른 프로세스가 critical section을 실행하지 못하고 기다려야한다
 
+### avoid deadlock 교착상태 피하기
+`교착상태` : A프로세스 B프로세스가 있다고 한다면  
+A프로세스가 스캐너를 이용중이고 B프로세스가 CD레코더를 이용중인데  
+서로 자신의 점유를 포기하지 않고 B -> 스캐너 A -> 레코더 를 이용할려 한다면  
+서로 무한정 기다리게 되는것이 교착상태라고 볼 수 있다
 
-### avoid deadlock
-
-
-### avoid starvation
-
+### avoid starvation 기아상태 피하기
+`기아상태` : 자원을 할당받을려고 프로세스가 무한정 기다리는 것을 기아상태라고 한다
 
 위의 3가지를 다 이루면은 Critical section 문제를 해결했다고 본다
 
