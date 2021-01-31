@@ -88,6 +88,26 @@ UNIX 명령어 command 입력시 command 수행 종료될때까지 프롬프트�
 - process는 각자 자신만의 주소공간을 가지고 수행되며, 다른 프로세스의 주소 공간을 참조하는 것은 허용되지 않는다. (다른 프로세스의 수행에 영향을 미칠 수 없다)
 - 독립적인 프로세스들이 경우에 따라 협력할 떄 효율성이 좋아질 수 있다.
 - 대표적인 협력 메커니즘은 OS가 제공하는 IPC(Inter-Process Communication), 하나의 컴퓨터 안에서 실행 중인 서로 다른 프로세스 간 발생하는 통신이다. *의사소통(통신)+동기화 보장*
-  - 메세지 전달 (message passing) 방식
-  - 공유 메모리(shared memory) 방식
- 
+  - 메세지 전달 (message passing) 방식  
+  : 프로세스 간 공유데이터를 사용하지 않고 메시지를 전달
+    - 프로세스별로 주소공간이 다르므로 직접 전달할 수 없고, 시스템 콜을 요청해 OS의 커널의 send(message)와 receive(message)라는 두 가지 연산을 사용하여 주고받는다. 직접 주고받지 못하게 특권명령으로 규정
+    - 통신하길 원하는 프로세스간 논리적 혹은 물리적 커뮤니케이션 링크(communication link)를 생성
+    - 직접통신(direct communication) P->Q  
+    : 메시지 전송 대상이 다른 프로세스
+      - send(P, message)/receive(Q, message)
+    - 간접통신(indirect communication) P->M(A)->Q   
+    : 메시지 전송 대상이 메일박스(mail box) 혹은 포트(port)  
+      - 커뮤니케이션 링크는 고유의 ID를 지닌 메일박스를 공유하는 프로세스간 생성, 각 프로세스 쌍별로 여러 링크 공유, 단방향성 및 양방향성
+      - 메일박스 생성, 메일박스를 통한 메시지 send/receive, 메일박스 삭제 연산 가능
+      - send(A, message) 메일박스에 메시지 전송, receive(A, messgae) 메일박스로부터 메시지 수신
+      >$P_1$, $P_2$, $P_3$간 메일박스 A 공유시 $P_1$이 메시지 보냈을때, 누가 수신할 수 있는가?  
+       1>2개의 프로세스에게만 링크 생성  
+       2>링크에 대한 receive() 연산을 매 시점 하나의 프로세스만 수행 가능  
+       3>시스템이 수신자를 임의로 결정해 누가 수신했는지 송신자에게 통신
+         
+      ![운영체제 프로세스 관리](https://media.vlpt.us/images/marintelli/post/ec3b334f-dfb6-4dd9-827d-3f173d7ff4aa/image.png)
+  - 공유 메모리(shared memory) 방식  
+    - OS에서 공유메모리를 사용하는 시스템 콜을 지원해, 서로 다른 프로세스들이 주소공간 일부를 공유할 수 있게함  
+    - 실제로는 **독자적인 주소공간**을 지니고 있지만, 주소공간이 물리적 메모리에 매핑될때 공유메모리 주소 영역에 대해 **동일한 물리적 메모리 주소**로 매핑
+    - 프로세스끼리 공유메모리 접근 동기화 문제를 책임
+    ![해맥(海脈)의 IT/정보기술: 프로세스간 통신(interprocess communication (IPC))](https://4.bp.blogspot.com/-r49YC4OIrVs/T5aiAuE4R3I/AAAAAAAAJFc/PvBqWYa9k5Q/s1600/%EC%82%AC%EC%9A%A9%EC%9E%90+%EC%A7%80%EC%A0%95+7.jpg)
