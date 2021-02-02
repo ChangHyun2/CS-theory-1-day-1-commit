@@ -48,3 +48,17 @@ TCP 연결은 4 종류의 숫자 정보를 통해 구분될 수 있다.
 3. destination IP 주소
 4. destination port
 
+![](./ch4-connection-management/2021-02-02-23-48-29.png)
+
+C , D와 같이 TCP 연결은 서로 같은 도착지의 port를 공유할 수도 있다.
+B, C의 경우에는 서로 같은 IP 도착 주소를 가진다.
+
+## Programming with TCP Sockets
+
+TCP 연결을 조작하는 방식은 운영체제마다 서로 다르게 구현되어 있다.
+소켓 API는 TCP/IP 처리 과정을 감추어 HTTP를 사용하는 프로그래머가 손쉽게 연결을 open할 수 있도록 돕는다.
+소켓 API는 Unix 운영 체제에 의해 처음 개발되었지만, 현재에는 여러 운영체제와 언어로 구현되어 있다.
+
+![](./ch4-connection-management/2021-02-02-23-53-49.png)
+![](./ch4-connection-management/2021-02-02-23-53-55.png)
+
