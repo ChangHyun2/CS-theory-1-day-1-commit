@@ -31,4 +31,31 @@ acquire라는 함수를 실행할 때 available이 true로 바뀔때까지 무�
 `Busy Waiting`이라는 것은 오히려 context switch를 발생하지 않기 때문에  
 오버헤드가 발생하지 않는 장점으로 바뀌기도 한다  
 
-## 
+## Semaphores
+`Mutex Lock`에서는 2개의 프로세스를 다루는 방식이였다면 `Semaphores`에서는 2개 이상의 프로세스를 다루는 방식이다  
+세마포어는 신호장치라는 말인데 N이라는 임의의 값을 줌으로써 해당 값이 남아있다면  
+들어올 수 있다라는 신호를 값이 없다면 들어올 수 없다라는 신호를 준다  
+```c
+wait(s) {
+  while(s <= 0);
+  //busy waiting
+  s--
+}
+
+signal(s) {
+  s++;
+}
+```
+위에 코드에서 볼 수 있듯이  
+s값이 남아있다면 critical section으로 들어갈 수 있다  
+s값이 없다면은 들어갈 수 없이 무한대기를 해야한다  
+
+s값을 설정하는 기준은 현재 가용할 수 있는 자원의 개수를 표시한다  
+이용할 수 있는 자원이 3개가 존재한다면 s값을 3으로 주면된다  
+
+### busy waiting
+Mutex Locks와 같이 Semaphores도 busy waiting문제가 발생한다  
+위에서는 언급하지 않았지만 이문제는 waiting queue와 ready queue를 이용하여 해결 가능하다  
+busy waiting대신에 waiting queue로 들어간다  
+그다음 진입 가능하게 되면 ready queue로 들어가서 차례를 기다린다  
+
