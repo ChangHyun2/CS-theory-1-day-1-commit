@@ -62,3 +62,18 @@ TCP 연결을 조작하는 방식은 운영체제마다 서로 다르게 구현�
 ![](./ch4-connection-management/2021-02-02-23-53-49.png)
 ![](./ch4-connection-management/2021-02-02-23-53-55.png)
 
+socket API는 TCP endpoint 자료 구조를 만들어, end points(노드)를 server TCP endpoints에 연결하고, data stream을 read/write한다.
+TCP API는 네트워크 프로토콜 핸드쉐이킹, TCP data stream의 조각화, 재조합과 같은 복잡한 과정을 숨긴다.
+
+아래 그림은 power-tools.html 다운로드 과정을 보여준다.
+![](ch4-connection-management/23-51-07.png)
+
+- 웹 서버는 커넥션이 연결되는 것을 기다리고(listen)
+- 클라이언트는 URL을 통해 IP 주소와 port number를 결정하며 server에 TCP 연결을 성립시킨다.
+- 연결에 소요되는 시간은 서버까지의 거리, 서버에서의 load, 인터넷 혼잡에 따라 달라진다.
+- 연결이 이루어질 경우, 클라이언트는 HTTP 요청을 서버에 보내고 서버는 이를 read한다.
+- 서버는 client의 메세지를 받고 data를 client에게 보낸다.
+
+## TCP performance Considerations
+
+HTTP는 TCP로 이루어져있기 때문에, 
