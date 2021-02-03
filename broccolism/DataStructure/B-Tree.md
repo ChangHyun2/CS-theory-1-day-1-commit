@@ -46,3 +46,19 @@ typedef Node *NodeStruct_
 - B Tree 삽입의 특징은 오직 **leaf 노드에서만 이루어진다**는 점이다.
   - 그렇다면 leaf 노드만 key를 잔뜩 갖게 되지 않나요?
     - 그래서 균형을 맞추기 위해 `split` 연산이 일어난다.
+  - 구현 방식은 아래와 같이 2가지 방식이 있다.
+    1. 진짜로 leaf까지 내려가서 key를 삽입한 후, 필요한 경우 위로 점점 거슬러 올라가면서 split하는 방식
+    - 보통 이 방식을 많이 사용한다.
+    2. leaf까지 내려가는 과정에서 필요한 노드에 미리 split을 해주는 방식
+    - 왜 이걸 잘 안쓰냐하면, 불필요한 split이 일어날 수도 있기 때문이다.
+
+#### Split()
+
+![split](https://media.geeksforgeeks.org/wp-content/cdn-uploads/BTreeSplit.jpg)
+
+- 한 노드가 너무 많은 key를 담게 되었을 때 그 노드를 나누는 연산.
+- split이 일어나면, 새로운 노드 2개가 생기고 기존 노드에 있던 key 중 하나가 parent node로 들어간다.
+  - 만약 parent node에서 overflow가 발생하면 그 노드에서도 split을 해줘야한다.
+- parent node로 들어가는 key는 기존 노드의 중간값이다.
+  - 그래서 새로운 노드 2개는 각각 그 중간값보다 작은 keys의 모임과 큰 keys의 모임이 된다.
+    - AVL tree, BST의 left, right 느낌이 솔솔 난다.
