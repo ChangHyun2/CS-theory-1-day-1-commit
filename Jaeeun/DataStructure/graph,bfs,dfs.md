@@ -69,8 +69,3 @@ def dfs(graph, start_node):
 			need.visit.extend(graph[node])
 	return visited
 ```
-
-
-
-
-
