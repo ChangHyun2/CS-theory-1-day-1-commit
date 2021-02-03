@@ -452,3 +452,147 @@ $\{ a_1,a_2,...,a_m\} \cup \{b_1,b_2,...,b_n\}$
  예) inst_dept는 department 릴레이션을 참조하는 dept_name 속성의 외래 키 제약조건을 가지고 있다.이 외래 키 제약조건은 inst_dept에 대한 스키마가 instructor로 합쳐질 때 instructor 릴레이션에 추가된다.
 
 ---
+# Extended E-R의 특성들
+
+### 세분화 (Specialization)
+
+- 하향식 설계 프로세스; 초기 개체 집합에서 구별 작업이 명시적으로 진행되는 일련의 하위 개체 그룹으로 표현한다.
+- 이런 하위 그룹은 속성이 있는 하위 수준 엔터티 집합이 된다. 혹은 상위 수준 엔터티 집합에 적용되지 않는 관계에 참여한다.
+- 세분화된 개체로부터 다른 개체로 향하는 빈 화살표로 나타낸다.
+- **속성의 상속(inheritance)**: 하위 수준의 엔터티 집합은 상위 개체의 모든 속성들을 상속하고 상위 개체가 참가하는 관계 집합에의 참가 또한 상속받는다.
+- **분리 제약조건(disjointness constraint)**
+    - Overlapping specialization(중복되는 세분화)
+
+         세분화된 개체에 중복적으로 나타날 수 있는 세분화. ex) employee 와 stuent
+        두 개의 분리된 화살표를 사용한다.
+
+    - Disjoint specialization(중복되지 않는 세분화)
+
+         세분화된 개체에 중복되어 나타나지 않는 세분화. ex) employee의 세분화 instructor와 secretary
+        하나의 화살표가 사용된다.
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9c3bb76b-5f84-42ea-95ca-1d74ce5bc2c9/Untitled.png](./database-design/23.png)
+
+### 릴레이션 스키마로의 변환
+
+- 방법 1
+    - 상위 개체 집합을 위한 스키마를 만든다.
+    - 각각의 하위 개체 집합을 위해 각 개체 집합의 속성들과 상위 개체 집합의 주 키인 속성들에 대한 속성을 가지는 스키마를 만든다.
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f6cadf9d-009e-42f8-9c61-426ce8c388e0/Untitled.png](./database-design/24.png)
+
+    - 상위 개체 집합의 주 키 속성은 상위 개체 집합뿐만 아니라 모든 하위 개체 집합의 주 키가 된다.
+- 방법 2
+    - 일반화(세분화)가 disjoint이면서 total이라면 상위 개체 집합을 위한 스키마를 만들지 않을 수도 있다.
+     → 어떤 개체도 한 상위 개체 집합의 바로 하위에 있는 2개의 개체 집합에 동시에 속하지 않으면서, 상위 개체 집합의 모든 개체는 하위 개체 집합들 중 하나의 구성원인 경우
+    - 대신에 각각의 하위 개체 집합에 대해 **자신의 속성들을 나타내는 속성들과 상위 개체 집합의 속성들을 함께** 나타내는 속성들을 가지는 스키마를 만든다.
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/04b2f0d3-11e7-471d-8ec9-57886425e341/Untitled.png](./database-design/25.png)
+
+## 일반화 (Generalization)
+
+- 상향식 설계 프로세스; 같은 특징들을 공유하는 다수의 개체 집합을 상위 개체 집합으로 합한다.
+- 세분화와 일반화는 단지 서로의 반대일 뿐이다. ERD에 똑같은 그림으로 한번에 나타난다. 용어 또한 혼용하여 쓰인다.
+- **완전성 제약조건(completeness constraint)**
+    - 전체 일반화/세분화(total generation/specialization): 각 상위 개체는 하위 개체 집합에 속한다.
+    - 부분 일반화/세분화(partial): 어떤 상위 개체는 하위 개체 집합에 속하지 않을 수 있다.
+    - 부분 일반화가 기본사항이며 전체 일반화는 ER 다이어그램에서 "total"이라는 키워드를 추가하고 해당되는 빈 화살표까지 점선을 그려서 나타낸다. (중첩 일반화일 경우 화살표들의 집합까지 점선을 그린다.)
+
+## 통합화 (Aggregation)
+
+- ER 모델의 한계 중 하나는 관계들 간의 관계를 표현하지 못한다.
+- instructor, student, project 간의 proj_guide라는 삼진 관계에서 나타난다.
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/33cf4bcb-2551-4138-ba8d-e3195b055e9d/Untitled.png](./database-design/26.png)
+
+- 예) 어떤 프로젝트에서 학생을 지도하고 있는 각 교수는 매월 평가 보고서를 제출해야 한다.
+- 이 평가 보고서를 evaluation_id를 주 키로 가지는 evaluation 개체로 모델링할 수 있다.
+- 어떤 evaluation에 해당하는 (student, project, instructor) 조합을 기록하기 위해 instructor, student, project, evaluation 간이 4진 관계인 eval_for를 생성할 수 있다.
+- proj_guide와 eval_for 관계 집합은 하나로 결합될 수 있을 것처럼 보이지만 어떤 instructor, student, project의 조합은 연관된 evaluation을 가지지 않을 수도 있기 때문에 결합해서는 안된다.
+- eval_for에 있는 모든 instructor, student, project 조합은 반드시 proj_guide에도 있으므로, 중복되는 정보가 들어가 있다.
+- 이 문제를 통합화(aggregation)을 이용해서 해결할 수 있다.
+- **통합화**를 통한 중복성 제거
+    - 관계를 상위 개체로 취급하는 추상화 기법 → proj_guide 관계 집합을 proj_guide라는 상위 개체 집합으로 간주한다.
+    - 관계 사이의 관계를 허용한다.
+    - 새로운 개체로의 관계의 추상화
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/27bff5ff-47e5-4b81-af24-1c9f8680567c/Untitled.png](./database-design/27.png)
+
+    - 하나의 학생은 특정 프로젝트에서 특정 교수에 의해 지도받는다. (proj_guide)
+    - (학생, 교수, 프로젝트) 조합은 평가와 연결될 수 있다. (eval_for)
+
+### 릴레이션 스키마로의 변환
+
+- proj_guide의 통합화와 개체 집합 evaluation 사이의 관계 집합 eval_for를 위한 스키마는 개체 집합 evaluation과 관계 집합 proj_guide의 주 키들에 해당하는 속성을 가진다.
+- 관계 집합 eval_for에 기본 속성들이 있으면 이에 해당하는 속성도 포함한다.
+- 그 후 통합화된 개체 집합의 내부에 있는 관계 집합들과 개체 집합들을 스키마로 변환한다.
+- 통합화의 주 키는 그것이 정의하는 관계 집합의 주 키이다.
+- 통합화를 위해 별도의 테이블이 요구되지는 않고 관계를 정의하여 생성된 릴레이션이 대신 사용된다.
+
+---
+
+# 설계 이슈
+
+## ER 다이어그램에서 잘못된 사용
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9b4406e2-70de-4296-a6e9-b6f99142381f/Untitled.png](./database-design/28.png)
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4a01c6a8-74bc-4680-98ca-aa9e2772a83a/Untitled.png](./database-design/29.png)
+
+## 엔터티 vs 속성
+
+- 교수의 핸드폰 번호를 속성으로 사용할 것인가 vs 다른 엔터티로 도출할 것인가
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9ab4bc0d-23f5-4e37-99c0-62518696aa0c/Untitled.png](./database-design/30.png)
+
+- 엔터티로 사용하는 것이 핸드폰 번호에 대한 추가적인 정보를 주는 데에는 유리하다.
+
+## 엔터티 vs 관계 집합
+
+- 개체 집합 사용 vs 관계 집합 사용
+
+     가능한 가이드라인으로는 개체들 사이에 발생하는 **행위를 기술하는 관계 집합**을 설계한다.
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/d0b56bab-5ea2-45c8-a4fc-114ee71dc5c4/Untitled.png](./database-design/31.png)
+
+- 관계 속성의 위치
+
+     예) 교수와 학생의 일대다 관계 집합인 advisor
+
+     교수가 언제 학생의 지도교수가 될지를 나타내는 속성 date.
+
+    instructor 개체 집합의 속성으로 나타나야 하는가 vs student의 것으로 나타나야 하는가
+
+    → 많은 쪽의 개체 집합으로 속성을 옮겨야 한다.
+
+    - 일대일의 경우: 참가하는 개체의 양쪽 어느 쪽에 위치해도 좋다.
+
+         → 실세계의 구성의 특성을 반영해야 한다.
+
+    - 다대다의 경우: 참가하는 양 개체 중 어느 한쪽이 아닌 advisor 관계 집합의 속성이어야 한다.
+
+## 이진 vs 비이진 관계
+
+- 비이진 관계 집합을 분리된 수많은 이진 집합으로 대체하는게 가능할지라도, n-항 관계 집합이 하나의 관계에 참여하는 다수의 개체들을 명확히 보여준다.
+- 하지만 비이진 관계로 나타나는 어떤 관계들은 이진 관계를 이용해서 보여주는게 효과적일 때도 있다.
+    - 예) child와 father, mother로 연결하는 삼진 관계 parents 는 두 개의 이진 관계, father과 mother로 나타내는 것이 낫다.
+        - 두 개의 이진 관계는 부분적 정보를 주기도 한다.
+    - 하지만 proj_guide처럼 이진 관계로 나타내는 것이 좋지 않은 경우도 있다.
+- 일반적으로 어떤 비이진 관계도 인위적인 개체 집합을 이용하면 이진 관계로 나타낼 수는 있다.
+
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9682783c-533a-421d-93ea-42dbbec6a77e/Untitled.png](./database-design/32.png)
+
+## ER 표기법 요약
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/007b1978-bd9d-4fb4-bf7b-b7352f52842e/Untitled.png](./database-design/33.png)
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9d280b24-e6c2-43a4-a40f-c796d07d0afc/Untitled.png](./database-design/34.png)
+
+# UML 표기법
+
+- UML: Unified Modeling Language
+- ER 표기법과 비슷하지만 몇 가지 차이점이 있다.
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cb48c448-d128-4f4c-9889-64e8154e6c98/Untitled.png](./database-design/35.png)
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/28a9ffa3-d357-4e46-bb23-ccd1be6515da/Untitled.png](./database-design/36.png)
