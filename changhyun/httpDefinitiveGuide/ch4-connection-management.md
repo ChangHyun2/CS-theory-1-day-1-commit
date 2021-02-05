@@ -119,7 +119,14 @@ SYN/SYN+ACK 핸드쉐이크는 요청 데이터의 크기가 작을 경우 필�
 인터넷 자체가 신뢰성있는 패킷 전송을 보장하지는 않으므로, TCP는 성공적인 데이터 전송을 위해 acknowledgment scheme을 구현한다.
 
 각 TCP 조각은 sequence number와 data-integrity checksum을 부여받는다. segment를 전달받는 수신자는 몇 개의 ACK 패킷 조각들을 sender에게 돌려보낸다.
-sender가 정해진 시간 내에 ACK 패킷을 전달받지 못할 경우 패킷이 유실/파괴/변형되었다고 판단해 data를 다시 전송하게 된다.
-ACK는 크기가 작기 때문에 TCP는 같은 방향으로 전달되는 data packet에 이를 얹혀 전달한다.(piggy back)
-=======
->>>>>>> Stashed changes
+sender가 정해진 시간 내에 ACK 패킷을 전달받지 못할 경우 패킷이 유실/파괴/변형되었다고 판단해 data를 다시 전송하게 된다. ACK는 크기가 작기 때문에 TCP는 같은 방향으로 전달되는 data packet에 이를 얹혀 전달해 네트워크 자원을 최소화하고 이러한 ACK 전송 방법을 piggy back이라 한다. 
+Delayed ACK는 일정 시간 동안 outgoing ACK를 buffer에 잡아두며, piggyback할 데이터 패킷을 찾는다.
+만약 해당 시간 내에 밖으로 전달되는 데이터 패킷이 도착하지 않는다면, ACK는 자기 자신의 데이터 패킷을 통해 전송된다.
+하지만 불행히도, HTTP는 request-reply 두 방향으로 전송되기 때문에 piggyback할 수 있는 확률이 줄어들게 된다.
+
+## TCP Slow Start
+
+TCP data 전송의 성능은 TCP 연결의 age에 의해 결정된다. TCP 연결은 데이터가 성공적으로 전송되면서 시간이 지남에 따라 전송 속도가 빨라지며 연결을 최적화한다. 이러한 tuning을 TCP slow start라 한다. 이는 갑작스러운 인터넷 과부화와 혼잡을 방지한다.
+TCP slow start는 다량의 패킷들을 쓰로틀링한다. 각 패킷이 성공적으로 도착할 때마다, 송신자는 두 개의 패킷을 더 전달받을 수 있는 권한을 갖게 된다. 만약, HTTP transaction이 전송할 데이터를 다량 가지고 있다면, 모든 패킷을 한 번에 보내지 않을 것이다. 한 패킷을 보낸 후, ACK를 전달받고 점차 보낼 수 있는 패킷을 늘려나간다. 이는 'opening the congestion window'라 불린다.
+
+혼잡 제어 기능으로 인해, 새로운 연결은 이미 다량의 데이터를 전송해온 튜닝되어진 연결에 비해 느릴 것이다. 그러므로, HTTP는 되도록 기존의 연결을 재사용하며 이를 persistent connections라 한다.
