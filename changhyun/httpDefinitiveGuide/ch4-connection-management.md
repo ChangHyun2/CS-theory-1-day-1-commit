@@ -76,4 +76,47 @@ TCP API는 네트워크 프로토콜 핸드쉐이킹, TCP data stream의 조각�
 
 ## TCP performance Considerations
 
-HTTP는 TCP로 이루어져있기 때문에, 
+HTTP는 TCP 바로 위에 놓여있는 계층으로, TCP plumbing을 어떻게 하는지에 따라 성능이 크게 좌우된다. 
+
+## HTTP Transaction Delays
+
+![](ch4-connection-management/00-07-37.png)
+
+그림에서 보이는 것과 같이 transaction processing은 request/response 메세지 전송 시간에 비해 짧은 시간 내에 이루어진다. 클라이언트 또는 서버가 복잡하거나 dynamic한 resource를 전송하지 않는 이상, HTTP delay는 TCP network delay에 의해 발생한다.
+
+HTTP transaction 딜레이는 아래의 과정에서 크게 발생한다.
+- URI의 hostname을 최근에 방문한 적이 없다면 DNS resolution을 통해 URI가 IP 주소로 변환되어야 한다.
+- 이후 클라이언트는 IP주소와 port번호를 통해 server에 연결을 요청하고 연결 여부에 대한 피드백을 기다린다.
+- 연결이 성립되면, HTTP 요청은 새롭게 연결된 TCP pipe를 통해 전송된다.
+- server는 클라이언트로 HTTP 응답을 보낸다.
+
+## Performance Focus Areas
+
+- TCP 연결 setup 핸드쉐이크
+- TCP slow-start 혼잡 제어
+- data aggregation을 위한 Nagle's 알고리즘
+- piggybacked acknowledgements를 위한 TCP의 지연 인식 알고리즘
+- TIME_WIAIT 딜레이와 port 고갈
+
+## TCP connection handshake delay
+
+![](ch4-connection-management/00-26-45.png)
+
+핸드쉐이크 절차는 아래와 같다.
+1. 새로운 TCP 연결을 요청하기 위해, 클라이언트는 작은 TCP 패킷(40-60 bytes)을 전송한다. 이 때 패킷은 연결 요청 패킷이라는 정보를 담기 위해 'SYN' flag set을 포함
+2. SYN 패킷을 전달 받으면, 연결에 필요한 파라미터를 계산하고 전달받은 SYN 패킷에 연결 요청이 받아들여졌다는 것을 의미하는 ACK flags set을 추가해 패킷을 client에 되돌려 보낸다.
+3. 클라이언트가 Acknowledgment를 서버에 다시 돌려 보내 연결이 성공적으로 성립되었다는 것을 알린다. 이 떄, ACK 패킷 안에 data를 담아 보내기도 한다.
+
+패킷은 TCP/IP를 통해서만 처리되기 때문에 HTTP 프로그래머는 이러한 패킷을 확인할 수 없다. HTTP 프로그래머는 TCP 연결에 대한 지연 시간만을 확인할 수 있다.
+
+SYN/SYN+ACK 핸드쉐이크는 요청 데이터의 크기가 작을 경우 필요 데이터를 처리하는 것에 비해 상당한 지연 시간을 야기한다.
+연결 정보를 담는 패킷이 전체 요청/응답 메세지를 전송할 수 있는 여유가 있다면 데이터를 포함해 전송한다.
+
+
+## Delayed Acknowledgements
+
+인터넷 자체가 신뢰성있는 패킷 전송을 보장하지는 않으므로, TCP는 성공적인 데이터 전송을 위해 acknowledgment scheme을 구현한다.
+
+각 TCP 조각은 sequence number와 data-integrity checksum을 부여받는다. segment를 전달받는 수신자는 몇 개의 ACK 패킷 조각들을 sender에게 돌려보낸다.
+sender가 정해진 시간 내에 ACK 패킷을 전달받지 못할 경우 패킷이 유실/파괴/변형되었다고 판단해 data를 다시 전송하게 된다.
+ACK는 크기가 작기 때문에 TCP는 같은 방향으로 전달되는 data packet에 이를 얹혀 전달한다.(piggy back)
