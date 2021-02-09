@@ -59,7 +59,7 @@
 
  확장성 문제를 해결하기 위해 DNS는 많은 서버를 이용하고 이들을 **계층 형태**로 구성하여 전 세계에 분산시켰다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/36d9db92-d01c-4091-af36-a4e0d04dffd2/Untitled.png](./DNS/0.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/36d9db92-d01c-4091-af36-a4e0d04dffd2/Untitled.png](./img/DNS/0.png)
 
  DNS 서버는 세 유형의 DNS 서버로 구성된다.
 
@@ -72,7 +72,7 @@
 
      기관은 이 레코드를 갖도록 자신의 책임 DNS 서버의 구현을 선택할 수 있다. 또한 일부 서비스 제공자의 책임 DNS 서버에 이 레코드를 저장하도록 요청하고 비용을 지불한다. **대부분의 대학과 큰 기업**들은 자신의 **기본 책임 DNS 서버와 보조 책임 DNS 서버**를 유지하고 구현한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2b265162-8f98-47b3-bb56-c326ba4b68b4/Untitled.png](./DNS/1.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2b265162-8f98-47b3-bb56-c326ba4b68b4/Untitled.png](./img/DNS/1.png)
 
 ### 로컬 DNS 서버
 
@@ -97,7 +97,7 @@
 7. **gaia.cs.umass.edu**의 IP 주소를 얻는다.
 8. 이 IP 주소를 호스트 **cse.nyu.edu**에게 응답한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a900851-d4d0-4009-9180-c80141f3ada3/Untitled.png](./DNS/2.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a900851-d4d0-4009-9180-c80141f3ada3/Untitled.png](./img/DNS/2.png)
 
  이와 같이 통신하면 총 8번의 DNS 메시지가 보내진다.
 
@@ -110,7 +110,7 @@
 
  
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3b752b68-9bd0-45ea-b7cf-85aa4cdfc1bb/Untitled.png](./DNS/3.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3b752b68-9bd0-45ea-b7cf-85aa4cdfc1bb/Untitled.png](./img/DNS/3.png)
 
  모든 질의가 재귀적일 경우 위와 같다.
 
@@ -169,7 +169,7 @@ DNS 캐싱의 목적은 다음과 같다.
 
 ### DNS 메시지
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c417675-dd60-45ec-8ad8-5d094c13b6f0/Untitled.png](./DNS/4.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3c417675-dd60-45ec-8ad8-5d094c13b6f0/Untitled.png](./img/DNS/4.png)
 
  DNS의 메시지는 질의와 응답 메시지가 있다. 그리고 이들은 모든 위와 같은 포맷을 가진다.
 

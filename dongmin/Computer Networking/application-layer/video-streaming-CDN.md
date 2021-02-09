@@ -62,7 +62,7 @@
 
     이들 링크 중 하나라도 비디오 소비율보다 낮은 전송용량을 갖는다면 종단간 처리율이 낮아짐
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bc75f6d4-144c-4a6e-b1ae-d716fa73e2a9/Untitled.png](./CDN/0.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bc75f6d4-144c-4a6e-b1ae-d716fa73e2a9/Untitled.png](./img/CDN//0.png)
 
 2. 인기 있는 비디오는 같은 통신 링크를 통해 여러 번 반복적으로 전송
     - 네트워크 대역폭 낭비
@@ -109,7 +109,7 @@
         5. 로컬 DNS는 콘텐츠를 제공할 CDN 서버의 IP 주소를 사용자 호스트에게 알려줌
         6. 사용자 호스트는 해당 IP 주소로 직접 TCP 연결을 설정하고 비디오에 대한 HTTP GET 요청 전송 (DASH 기술이 적용될 수도 있음)
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7664aeb7-7069-422f-ac20-442755b47a0f/Untitled.png](./CDN/1.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/7664aeb7-7069-422f-ac20-442755b47a0f/Untitled.png](./img/CDN//1.png)
 
 ### 클러스터 선택 정책
 
@@ -136,7 +136,7 @@
 - 두 가지 구성 요소: 아마존 클라우드, 자체 CDN 인프라
 - 넷플릭스 웹 사이트는 아마존 서버 안에 있는 아마존 클라우드에서 모든 것이 실행
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/86877119-f26c-42fe-ba49-b8656424a6c3/Untitled.png](./CDN/2.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/86877119-f26c-42fe-ba49-b8656424a6c3/Untitled.png](./img/CDN//2.png)
 
 - 아마존 클라우드의 기능
     - **콘텐츠 수집 (Contents Ingestion)**: 영화를 수집하고 처리. 영화의 스튜디오 마스터 버전을 받아서 아마존 클라우드 시스템의 호스트에 업로드

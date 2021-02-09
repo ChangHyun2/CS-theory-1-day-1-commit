@@ -4,7 +4,7 @@
 
  end-system에만 어플리케이션 SW가 존재한다는 기본 설계는 인터넷 어플리케이션의 광대하고 빠른 발전의 원동력이 됐다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/52cf2524-5822-413c-846d-acb322566d1c/Untitled.png](./application-layer/0.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/52cf2524-5822-413c-846d-acb322566d1c/Untitled.png](./img/application-layer/0.png)
 
 ## 네트워크 애플리케이션 구조
 
@@ -33,7 +33,7 @@
 - 상당한 서버 기반구조와 서버 대역폭을 요구하지 않기 때문에 **비용 효율적**이다.
 - 고도의 분산 구조 특성으로 인해 보안, 성능, 신뢰성 등에 단점이 있다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/96a9c21f-f9a3-46a0-a741-7439815b9f6f/Untitled.png](./application-layer/1.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/96a9c21f-f9a3-46a0-a741-7439815b9f6f/Untitled.png](./img/application-layer/1.png)
 
 ---
 
@@ -58,7 +58,7 @@
 
  
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/624210d8-75d1-4c8d-8825-bb625777e5d5/Untitled.png](./application-layer/2.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/624210d8-75d1-4c8d-8825-bb625777e5d5/Untitled.png](./img/application-layer/2.png)
 
  소켓은 네트워크 애플리케이션이 인터넷에 만든 프로그래밍 인터페이스이므로, **애플리케이션과 네트워크 사이의 API (Application Programming Interface)**라고도 한다. 애플리케이션 개발자는 소켓의 애플리케이션 계층에 대한 모든 통제권을 갖지만 소켓의 트랜스포트 계층에 대한 통제권을 거의 갖지 못한다.
 
@@ -121,7 +121,7 @@
 
  트랜스포트 프로토콜은 비밀성 이외에도 **데이터 무결성**과 **종단 인증** 등의 서비스를 제공할 수 있다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0cb987d4-0a33-4682-bb42-11c629396363/Untitled.png](./application-layer/3.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/0cb987d4-0a33-4682-bb42-11c629396363/Untitled.png](./img/application-layer/3.png)
 
 ---
 
@@ -165,7 +165,7 @@
 
  즉, 오늘날의 인터넷은 때로 시간 민감 애플리케이션에게 만족스런 서비스를 제공할 수는 있으나 시간 혹은 대역폭 보장을 제공할 수는 없다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b4070d0c-96a7-4c73-871c-163e5d2ab1a7/Untitled.png](./application-layer/4.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b4070d0c-96a7-4c73-871c-163e5d2ab1a7/Untitled.png](./img/application-layer/4.png)
 
  인터넷 전화 응용 개발자들은 보통 UDP를 채택하는데 많은 방화벽(firewall)들이 대부분 형태의 UDP 트래픽을 차단하도록 설정되어 있기 때문에, UDP 통신이 실패할 경우를 대비하여 TCP를 사용하도록 설계되어 있다.
 
@@ -217,7 +217,7 @@
 
  서버가 클라이언트에게 요청 파일을 보낼 때, 서버는 클라이언트에 관한 어떠한 상태 정보도 저장하지 않는다.  → **비상태 프로토콜(stateless protocol)**
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cd09f27e-0b0d-4893-8c60-bdbcbb3eef52/Untitled.png](./application-layer/5.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/cd09f27e-0b0d-4893-8c60-bdbcbb3eef52/Untitled.png](./img/application-layer/5.png)
 
  
 
@@ -255,7 +255,7 @@ http://www.someSchool.edu/someDepartment/home.index
 
  RTT는 패킷 전파 지연(propagation delay), 중간 라우터와 스위치에서의 패킷 큐잉 지연 (queuing delay), 패킷 처리 지연(processing delay) 등을 포함한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5326181d-2aa4-487b-9f22-51678040ed6f/Untitled.png](./application-layer/6.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5326181d-2aa4-487b-9f22-51678040ed6f/Untitled.png](./img/application-layer/6.png)
 
   사용자가 하이퍼링크를 클릭하면 일어나는 일을 나타낸다. 클릭은 브라우저가 브라우저와 웹 서버 사이에서 TCP연결을 시도하게 한다. 이는 "3-hand handshake"를 포함한다.
 
@@ -290,7 +290,7 @@ http://www.someSchool.edu/someDepartment/home.index
 
 ### HTTP 요청 메시지
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f6ac146e-ee2f-4130-8f8a-bd7ddce6eb15/Untitled.png](./application-layer/7.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f6ac146e-ee2f-4130-8f8a-bd7ddce6eb15/Untitled.png](./img/application-layer/7.png)
 
  
 
@@ -311,7 +311,7 @@ http://www.someSchool.edu/someDepartment/home.index
 
  User-agent: 헤더 라인은 사용자 에이전트, 서버에게 요청을 하는 브라우저 타입을 명시하는데 서버가 같은 객체에 대한 다른 버전을 다른 타입의 사용자 에이전트에게 보낼 수 있다는 데에서 유용하다. Accept-language: 헤더 라인은 객체의 요청 언어를 명시한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a301783-7a46-4d30-a0b5-764cd36defdb/Untitled.png](./application-layer/8.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a301783-7a46-4d30-a0b5-764cd36defdb/Untitled.png](./img/application-layer/8.png)
 
   요청 라인과 헤더 라인의 모든 라인들은 CR과 LF로 줄이 구분된다. 또한, 헤더 라인 이후에 "개체 몸체(entity body)"가 있다. 보통 개체 몸체는 GET 방식에서 비어 있고 POST 방식에서 사용된다.
 
@@ -321,7 +321,7 @@ http://www.someSchool.edu/someDepartment/home.index
 
 ### HTTP 응답 메시지
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9904feeb-188c-45ee-ab95-3a79c43d759b/Untitled.png](./application-layer/9.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9904feeb-188c-45ee-ab95-3a79c43d759b/Untitled.png](./img/application-layer/9.png)
 
  3개의 섹션으로 구분할 수 있다.
 
@@ -338,7 +338,7 @@ http://www.someSchool.edu/someDepartment/home.index
 5. Content-Length: 송신되는 객체의 바이트 수를 나타낸다.
 6. Content-Type: 개체 몸체 내부의 객체가 HTML 텍스트인 것을 나타낸다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce23f721-0c52-40c9-bf47-8772621f5b15/Untitled.png](./application-layer/10.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ce23f721-0c52-40c9-bf47-8772621f5b15/Untitled.png](./img/application-layer/10.png)
 
  대표적인 상태 코드와 연관 문장의 예로는,
 
@@ -384,7 +384,7 @@ http://www.someSchool.edu/someDepartment/home.index
 6. 아마존 서버로의 모든 HTTP 요청은 "Cookie: 자신의 식별번호"의 헤더 라인을 포함한다.
 7. 일주일 후에 다시 접속하여 쿠키를 헤더 라인에 넣어 요청하면 과거에 아마존에서 방문한 웹 페이지에 기초하여 제품을 추천한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a80c8ce4-1e22-48c5-a473-1b92e2425376/Untitled.png](./application-layer/11.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/a80c8ce4-1e22-48c5-a473-1b92e2425376/Untitled.png](./img/application-layer/11.png)
 
  
 
@@ -403,7 +403,7 @@ http://www.someSchool.edu/someDepartment/home.index
 3. 만약 웹 캐시가 객체를 가지고 있지 않다면, 웹 캐시는 origin 서버인 www/someschool.edu로 TCP 연결을 설정한다. 이후 웹 캐시는 캐시와 서버 간의 TCP 연결로 객체에 대한 HTTP 요청을 보낸다. 요청을 받은 후에 기점 서버는 웹 캐시로 HTTP 응답 메시지와 함께 객체를 보낸다.
 4. 웹 캐시가 객체를 수신할 때, 객체를 지역 저장장치에 복사하고 클라이언트 브라우저에 HTTP 응답 메시지와 함께 객체의 사본을 보낸다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e7a304f-b839-4438-acd7-008e1d254a84/Untitled.png](./application-layer/12.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1e7a304f-b839-4438-acd7-008e1d254a84/Untitled.png](./img/application-layer/12.png)
 
 ### 웹 캐싱의 이점
 
@@ -417,7 +417,7 @@ http://www.someSchool.edu/someDepartment/home.index
 
  
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b2555135-ec67-498f-8a58-0c3ab0818b22/Untitled.png](./application-layer/13.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b2555135-ec67-498f-8a58-0c3ab0818b22/Untitled.png](./img/application-layer/13.png)
 
  기관 네트워크는 고속의 LAN이며 기관 네트워크에 있는 라우터와 인터넷의 라우터는 15Mbps 회선에 연결된다. 평균 객체의 크기가 1Mbit이고 기관 브라우저로부터 오리지널 서버에 대한 평균 요청비율이 초당 15 요청이라 하자.
 
@@ -440,7 +440,7 @@ LAN의 트래픽 강도는
 1. 접속률을 15Mbps에서 100Mbps로 늘린다. → 비용이 많이 든다.
 2. 기관 네트워크에 웹 캐시를 설치한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f9395df4-8327-4f51-9f7f-37c700fd21a7/Untitled.png](./application-layer/14.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f9395df4-8327-4f51-9f7f-37c700fd21a7/Untitled.png](./img/application-layer/14.png)
 
  캐시 적중률은 일반적으로 0.2~0.7이므로 대략 0.4라고 한다면 요청의 40%는 캐시에 의해 즉시(10 msec 이내) 만족된다.
 
@@ -471,11 +471,11 @@ LAN의 트래픽 강도는
 
 1. 브라우저의 요청을 대신해 프록시 캐시는 요청 메시지를 웹 서버로 보낸다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f11f7939-1dd6-43c2-9f80-5dc3d9166f8a/Untitled.png](./application-layer/15.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f11f7939-1dd6-43c2-9f80-5dc3d9166f8a/Untitled.png](./img/application-layer/15.png)
 
 2. 웹 서버는 캐시에게 객체를 가진 응답 메시지를 보낸다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5649a3d3-9b95-4349-a708-9796b9248c43/Untitled.png](./application-layer/16.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5649a3d3-9b95-4349-a708-9796b9248c43/Untitled.png](./img/application-layer/16.png)
 
      캐시는 요청하는 브라우저에게 객체를 보내 주고 자신에게도 객체를 저장한다. 이때, 마지막으로 수정된 날짜를 함께 저장한다. (Last-Modified)
 
@@ -483,13 +483,13 @@ LAN의 트래픽 강도는
 
      이 객체는 지난주에 웹 서버에서 수정되었으므로 브라우저는 조건부 GET으로 갱신 조사를 수행한다. 브라우저는 특히 다음과 같은 헤더를 보낸다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1960d092-f47e-4fce-89ba-39b3bc915010/Untitled.png](./application-layer/17.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1960d092-f47e-4fce-89ba-39b3bc915010/Untitled.png](./img/application-layer/17.png)
 
      만약 명시된 날짜 이후 수정된 경우에만 그 객체를 보낼 것을 말한다. 만약 수정되지 않았다면,
 
 4. 웹 서버는 클라이언트에게 다음과 같은 메시지를 보낸다.
 
-    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73663f7c-1e73-436d-a7e0-46616a661d50/Untitled.png](./application-layer/18.png)
+    ![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/73663f7c-1e73-436d-a7e0-46616a661d50/Untitled.png](./img/application-layer/18.png)
 
      응답 메시지에는 요청된 객체를 포함하지 않는다. 요청 객체를 포함하는 것은 대역폭을 낭비하는 것이고, 그 개체가 크다면 사용자가 느끼는 응답 시간이 증가된다.
 
