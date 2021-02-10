@@ -99,3 +99,75 @@ serverSocket.close()
 - serverSocket.bind('', serverPort))
     - 포트 번호 12000을 서버의 소켓에 할당
     - 애플리케이션 개발자가 명시적으로 포트 번호를 소켓에 할당
+
+## TCP 소켓 프로그래밍
+
+- UDP와 달리 TCP는 클라이언트와 서버가 서로에게 데이터를 보내기 전에 **먼저 TCP 연결을 설정**할 필요가 있다.
+- TCP 연결의 한쪽은 클라이언트 소켓에, 다른 한 쪽은 서버 소켓에 연결
+- UDP에서는 매번 목적지 주소를 패킷에 직접 적고 보냈던 반면, TCP는 연결이 설정된 후 소켓을 통해 그 TCP 연결로 데이터를 보내기만 하면 된다.
+- TCP 통신 절차
+    1. 클라이언트는 먼저 서버로의 접속을 시도한다.
+        - 이때 서버는 이 초기 접속을 처리하는 특별한 소켓을 가져야 한다.
+        - 클라이언트가 TCP 소켓을 생성할 때 서버에 있는 **welcome 소켓**의 주소를 명시한다.
+    2. 클라이언트는 세 방향 핸드셰이크를 하고 서버와 TCP 연결을 설정한다.
+        - 전송 계층에서 일어나는 세 방향 핸드셰이크는 클라이언트와 서버 프로그램이 전혀 인식하지 못한다.
+    3. 핸드셰이크 후에 서버는 그 클라이언트를 위한 **새로운 소켓**을 생성한다.
+- 클라이언트 프로세스는 자신의 소켓으로 임의의 **바이트**를 보낼 수 있으며 보낸 순서대로 서버 프로세스가 바이트를 수신하도록 TCP가 보장한다. → **신뢰적 서비스**
+- 연결된 새로운 소켓을 통해 통신하는 것을 **연결된 파이프**로 생각할 수도 있다.
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/144b21da-3f53-4ad3-bf8f-03d6e55cc031/Untitled.png](./img/network-application/1.png)
+
+```python
+# TCPClient.py
+
+from socket import *
+serverName = 'serverName'
+serverPort = 12000
+clientSocket = socket(AF_INET, SOCK_STREAM)
+clientSocket.connect((serverName, serverPort))
+sentence = raw_input('Input lowercase sentence: ')
+clientSocket.send(sentence.encode())
+modifiedSentence = clientSocket.recv(1024)
+print('From Server: ', modifiedSentence.decode())
+clientSocket.close()
+```
+
+- clientSocket = socket(AF_INET, SOCK_STREAM)
+    - 클라이언트의 소켓을 생성할 때 해당 소켓의 포트 번호를 명시하지 않는다.
+    - 대신에 운영체제가 한다.
+- clientSocket.connect((serverName, serverPort))
+    - 클라이언트가 TCP 소켓을 이용해서 서버로 데이터를 보내기 전에 TCP 연결이 선행되어야 한다.
+    - (serverName, serverPort)는 연결의 서버 쪽 주소이다.
+    - 이 라인이 수행된 후에 세 방향 핸드셰이크가 수행되고 클라이언트와 서버 간에 TCP 연결이 설정된다.
+- clientSocket.send(sentence.encode())
+    - 패킷을 명시적으로 생성하지 않는다.
+    - 패킷에 목적지 주소를 붙이지 않는다.
+
+```python
+# TCPServer.py
+
+from socket import *
+serverPort = 12000
+serverSocket = socket(AF_INET, SOCK_STREAM)
+serverSocket.bind(('', serverPort))
+serverSocket.listen(1)
+print('The server is ready to receive')
+while True:
+	connectionSocket, addr = serverSocket.accept()
+	sentence = connectionSocket.recv(1024).decode()
+	capitalizedSentence = sentence.upper()
+	connectionSocket.send(capitalizedSetence.encode())
+	connectionSocket.close()
+serverSocket.close()
+```
+
+- serverSocket.bind(('', serverPort))
+serverSocket.listen(1)
+    - serverSocket이 웰컴 소켓이 된다.
+    - 출입문을 선정한 후 임의의 클라이언트가 문을 두드리기를 기다린다. (listen)
+    - 서버가 클라이언트로부터의 TCP 연결을 듣도록 한다. 파라미터는 연결의 최대 수를 나타낸다.
+- connectionSocket, addr = serverSocket.accept()
+    - 이 클라이언트에게 지정된 connectionSocket이라는 새로운 소켓을 생성한다.
+    - 핸드셰이킹을 완료한 후 클라이언트의 clientSocket과 서버의 connectionSocket 간에 TCP 연결을 생성한다.
+
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/36d1ef14-87c0-419d-a007-1f866c0a349b/Untitled.png](./img/network-application/2.png)
