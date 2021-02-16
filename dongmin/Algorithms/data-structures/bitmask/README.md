@@ -174,5 +174,5 @@
 
 ### 🏷️문제
 
-1. [프로그래머스] [카카오 2019 공채 - 후보키](https://programmers.co.kr/learn/courses/30/lessons/42890)
-2. [백준] [P17142 - 연구소3](https://www.acmicpc.net/problem/17142)
+1. [프로그래머스] 카카오 2019 공채 - 후보키 [[문제]](https://programmers.co.kr/learn/courses/30/lessons/42890) [풀이] [cpp](./code/) [java](./code/후보키.java)
+2. [백준] P17142 - 연구소3 [[문제]](https://www.acmicpc.net/problem/17142) [풀이] [cpp](./code/연구소3.cpp) [java](./code/)
