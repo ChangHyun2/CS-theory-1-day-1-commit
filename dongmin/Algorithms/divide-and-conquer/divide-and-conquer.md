@@ -31,7 +31,7 @@ ex)
 5. 만약 range에 한 개보다 많은 원소가 남아 있다면 2단계로 이동한다.
 6. 그렇지 않으면 주어진 시퀀스에 N이 존재하지 않는 것이며, 검색을 종료한다.
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/870e0e9c-a6a7-4b3d-b0fe-3e9bb439ddba/Untitled.png](./divide-and-conquer/0.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/870e0e9c-a6a7-4b3d-b0fe-3e9bb439ddba/Untitled.png](./img/0.png)
 
 ### 구현
 

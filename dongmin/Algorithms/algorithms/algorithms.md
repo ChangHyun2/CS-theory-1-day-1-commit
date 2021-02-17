@@ -24,7 +24,7 @@
 
  [[다른 분류] P-NP 문제](https://seungkwan.tistory.com/6)
 
-![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/89535d84-4c2b-47f9-9c46-2934b91f5986/Untitled.png](./algorithms/0.png)
+![https://s3-us-west-2.amazonaws.com/secure.notion-static.com/89535d84-4c2b-47f9-9c46-2934b91f5986/Untitled.png](./img/0.png)
 
 # 알고리즘 설계 패러다임
 
